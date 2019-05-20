@@ -6,7 +6,7 @@ Updates may be made along the way to enchance this project but it is open for al
 
 This project is currently not hosted and is not accessible in the web. 
 In order to use this project you must download the solution and restore it using VS or dotnet cli.
-You must also create a locale instance of MySQL and create a new table using the sql query file in the root directory.
+You must also create a local instance of MySQL and create a new table using the sql query file in the root directory.
 The Connection string must also be changed in appsetting.json in the root directory.
 
 furture updates to include:
