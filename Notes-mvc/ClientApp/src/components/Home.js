@@ -23,7 +23,8 @@ class Home extends Component {
     }
 
     componentWillReceiveProps(props) {
-        if (this.state.NoteText === "" && props.notes.NoteText != "") {
+        if (props.notes.isEditing) {
+            console.log(props.notes);
             this.setState({ NoteText: props.notes.NoteText, NoteID: props.notes.NoteID, NoteTitle: props.notes.NoteTitle });
         }
     }
@@ -44,7 +45,7 @@ class Home extends Component {
         event.preventDefault();
         const id = event.target.id;
         let note = this.props.notes.notes.find(x => x.noteId == id);
-        let item = { NoteTitle: note.noteTitle, NoteText: note.noteTitle, NoteID: note.noteId };
+        let item = { NoteTitle: note.noteTitle, NoteText: note.noteText, NoteID: note.noteId };
         this.props.triggerEdit(item);
     }
 
@@ -57,11 +58,13 @@ class Home extends Component {
         const note = { NoteID: this.state.NoteID, Updatedby: this.state.Updatedby, NoteText: this.state.NoteText };
         this.props.updateNote(note);
         setTimeout(this.props.requestNotes, 1500);
+        this.setState({ NoteTitle: "", NoteText: "", Madeby: "", Updatedby: "", NoteID: 0 });
     }
 
     cancelModal = event => {
         event.preventDefault();
         this.props.cancel();
+        this.setState({ NoteTitle: "", NoteText: "", Madeby: "", Updatedby: "", NoteID: 0 });
     }
 
     saveNewNote = event => {
@@ -73,6 +76,7 @@ class Home extends Component {
         const note = { NoteTitle: this.state.NoteTitle, Madeby: this.state.Madeby, NoteText: this.state.NoteText };
         this.props.addNote(note);
         setTimeout(this.props.requestNotes, 1500);
+        this.setState({ NoteTitle: "", NoteText: "", Madeby: "", Updatedby: "", NoteID: 0 });
     }
 
     handleInputChange = event => {
@@ -121,7 +125,7 @@ class Home extends Component {
                 <div className="field">
                     <label className="label">Note Contents</label>
                     <div className="control">
-                        <textarea className="textarea" name="NoteText" value={this.state.NoteText} onChange={this.handleInputChange}>{props.NoteText}</textarea>
+                        <textarea className="textarea" name="NoteText" value={this.state.NoteText} onChange={this.handleInputChange}></textarea>
                     </div>
                 </div>
             </div>
@@ -208,8 +212,8 @@ class Home extends Component {
         } else {
             return (
                 <div>
-                    <h1 class="title">Uh-oh!</h1>
-                    <h2 class="subtitle">No notes found! Try making a new note!</h2>
+                    <h1 className="title">Uh-oh!</h1>
+                    <h2 className="subtitle">No notes found! Try making a new note!</h2>
                 </div>
                 )
         }
@@ -221,6 +225,7 @@ class Home extends Component {
                 <div className="columns is-vcentered" id="NotesContainer">
                     <div className="buttons">
                         <span className="button is-info" onClick={this.newNote}>Create New Note</span>
+                        {this.props.notes.isLoading ? <span className="icon is-medium"><i className="fas fa-spinner fa-pulse"></i></span> : null}
                     </div>
                 </div>
                 <br/>

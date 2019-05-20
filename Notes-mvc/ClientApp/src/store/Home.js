@@ -25,13 +25,14 @@ let allNotes = {
 };
 
 export const actionCreators = {
+    // api queries
     requestNotes: () => async (dispatch, getState) => {
         dispatch({ type: requestNotesType });
         try {
             const url = "/api/note/"
             const response = await fetch(url);
             const notes = await response.json();
-            console.log(notes);
+            //console.log(notes);
             allNotes = {
                 notes: notes
             };
@@ -77,6 +78,7 @@ export const actionCreators = {
     updateNote: (note) => async (dispatch, getState) => {
         try {
             const baseURL = "/api/note";
+            console.log(note);
             const data = JSON.stringify(
                 { NoteID: note.NoteID, Updatedby: note.Updatedby, NoteText: note.NoteText }
             );
@@ -115,9 +117,9 @@ export const actionCreators = {
 
 export const reducer = (state, action) => {
     state = state || initialState;
-    console.log(action.type);
+    //console.log(action.type);
     switch (action.type) {
-
+        // map to props
         case requestNotesType: {
             return {
                 ...state,
@@ -157,7 +159,7 @@ export const reducer = (state, action) => {
             }
         }
         case triggerEdit: {
-            console.log(action.item);
+            //console.log(action.item);
             return {
                 ...state,
                 NoteID: action.item.NoteID,
