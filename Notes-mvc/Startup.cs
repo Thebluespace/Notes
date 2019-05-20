@@ -22,7 +22,7 @@ namespace Notes_mvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MyDbContext>( options => options.UseMySql("Server=localhost;Database=note;User=root;Password=r00t;"));
+            services.AddDbContext<MyDbContext>( options => options.UseMySql(Configuration.GetConnectionString("NotesDB")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSpaStaticFiles(configuration =>

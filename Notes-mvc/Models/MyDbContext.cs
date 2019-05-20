@@ -14,6 +14,7 @@ namespace Notes_mvc.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // for testing redundency 
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=r00t;database=note;");
