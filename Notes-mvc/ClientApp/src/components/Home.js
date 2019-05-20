@@ -176,7 +176,7 @@ class Home extends Component {
                     <div className="media-content">
                         <div className="content">
                             <p>
-                                <strong>{props.noteTitle}</strong> <small>{props.updatedOn ? props.updatedOn : props.createdOn}</small>
+                                <strong>{props.noteTitle}</strong> <small>{props.updatedOn ? "Updated On: " + props.updatedOn : "Made By: " +props.createdOn}</small>
                                 <br/>
                                 {props.noteText}
                             </p>
